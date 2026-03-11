@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
 #[derive(Debug)]
-pub enum GUICOmmand {
+pub enum GUICommand {
     ListUnit,
     ChosenUnit(PathBuf),
     ChosenRootFolder{
