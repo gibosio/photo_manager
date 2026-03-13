@@ -9,7 +9,7 @@ rinominare foto nella sorgente per capire le foto già copiate */
 
 use photo_manager_messages::{FolderList, PhotoFolder};
 use std::path::{Path, PathBuf};
-use sysinfo::{Disks, System};
+use sysinfo::Disks;
 
 // trait Core {
 //     fn get_sources() -> Vec<PathBuf>;
@@ -38,8 +38,8 @@ impl PhotoCore<Raw> {
         let disks = Disks::new_with_refreshed_list();
         disks
             .iter()
-            .filter(|disk|disk.is_removable())
-            .map(|disk|disk.mount_point().to_path_buf())
+            .filter(|disk| disk.is_removable())
+            .map(|disk| disk.mount_point().to_path_buf())
             .collect()
     }
     fn chosen_source(self, unit: &Path) -> PhotoCore<SelectedSource> {
@@ -71,9 +71,8 @@ impl PhotoCore<SelectedRootFolder> {
 }
 
 #[test]
-fn test1(){
+fn test1() {
     let core = PhotoCore::new();
     let sources = core.get_sources();
     println!("{sources:?}");
-
 }
