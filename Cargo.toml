@@ -1,0 +1,8 @@
+[workspace]
+members = [
+    "photo_manager_core",
+    "photo_manager_worker",
+    "photo_manager_messages",
+]
+
+resolver = "3"
