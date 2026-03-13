@@ -1,4 +1,6 @@
+use std::fs::DirEntry;
 use std::path::PathBuf;
+use exif::DateTime;
 
 #[derive(Debug)]
 pub enum GUICommand {
@@ -21,4 +23,9 @@ pub enum GuiEvent {
 pub struct FolderList {
     pub path: PathBuf,
     pub subfolders: Vec<FolderList>,
+}
+#[derive(Debug)]
+pub struct PhotoFolder {
+    date: DateTime,
+    photo: Vec<DirEntry>,
 }

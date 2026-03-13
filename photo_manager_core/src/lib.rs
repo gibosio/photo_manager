@@ -12,20 +12,13 @@ rinominare foto nella sorgente per capire le foto già copiate */
  */
 
 use exif::DateTime;
-use photo_manager_messages::FolderList;
+use photo_manager_messages::{FolderList, PhotoFolder};
 use std::{
     fs::DirEntry,
     marker::PhantomData,
     path::{Path, PathBuf},
 };
 
-
-
-#[derive(Debug)]
-pub struct PhotoFolder {
-    date: DateTime,
-    photo: Vec<DirEntry>,
-}
 
 trait Core {
     fn get_sources() -> Vec<PathBuf>;
