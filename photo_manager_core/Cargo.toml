@@ -4,3 +4,5 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+kamadak-exif = "0.6.1"
+photo_manager_messages = {path = "../photo_manager_messages"}
