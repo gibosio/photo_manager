@@ -1,22 +1,17 @@
+use exif::DateTime;
 use std::fs::DirEntry;
 use std::path::PathBuf;
-use exif::DateTime;
 
 #[derive(Debug)]
 pub enum GUICommand {
     ListSources,
     ChosenSource(PathBuf),
-    ChosenRootFolder{
-        path: PathBuf,
-        recurse: bool,
-    },
-
+    ChosenRootFolder { path: PathBuf, recurse: bool },
 }
 #[derive(Debug)]
 pub enum GuiEvent {
     SourcesList(Vec<PathBuf>),
     FoldersList(FolderList),
-    
 }
 
 #[derive(Debug)]

@@ -6,3 +6,4 @@ edition = "2024"
 [dependencies]
 kamadak-exif = "0.6.1"
 photo_manager_messages = {path = "../photo_manager_messages"}
+sysinfo = "0.38.4"

@@ -7,61 +7,73 @@ selezionare cartella da usare come root
 copiare foto in cartella divise in base a dato di scatto exif e un eventuale luogo (xxxx_xx_xx_luogo)
 rinominare foto nella sorgente per capire le foto già copiate */
 
-/****
- * worker molto basico, su thread separato, riceve comandi -> chiama core -> ritorna -> manda eventi
- */
-
-use exif::DateTime;
 use photo_manager_messages::{FolderList, PhotoFolder};
-use std::{
-    fs::DirEntry,
-    marker::PhantomData,
-    path::{Path, PathBuf},
-};
+use std::path::{Path, PathBuf};
+use sysinfo::{Disks, System};
 
-
-trait Core {
-    fn get_sources() -> Vec<PathBuf>;
-    fn chosen_unit(unit: &Path) -> FolderList;
-    fn chosen_folder(path: &Path, recurse: bool) -> Vec<PhotoFolder>;
-}
+// trait Core {
+//     fn get_sources() -> Vec<PathBuf>;
+//     fn chosen_unit(unit: &Path) -> FolderList;
+//     fn chosen_folder(path: &Path, recurse: bool) -> Vec<PhotoFolder>;
+// }
 
 struct Raw;
-struct SelectedSource;
-struct SelectedRootFolder;
+struct SelectedSource {
+    source: PathBuf,
+}
+struct SelectedRootFolder {
+    source: PathBuf,
+    root: PathBuf,
+}
 
 struct PhotoCore<State> {
-    source: Option<PathBuf>,
-    root_folder: Option<PathBuf>,
-    state: PhantomData<State>,
+    state: State,
 }
 
 impl PhotoCore<Raw> {
-    fn new() -> Self{
-        Self {
-            source: None,
-            root_folder: None,
-            state: std::marker::PhantomData,
-        }
+    fn new() -> Self {
+        Self { state: Raw }
     }
-    fn get_sources(&self) -> Vec<PathBuf>{
-        todo!()
+    fn get_sources(&self) -> Vec<PathBuf> {
+        let disks = Disks::new_with_refreshed_list();
+        disks
+            .iter()
+            .filter(|disk|disk.is_removable())
+            .map(|disk|disk.mount_point().to_path_buf())
+            .collect()
     }
     fn chosen_source(self, unit: &Path) -> PhotoCore<SelectedSource> {
-        todo!()
+        PhotoCore {
+            state: SelectedSource {
+                source: unit.to_path_buf(),
+            },
+        }
     }
 }
 impl PhotoCore<SelectedSource> {
-    fn get_folder(&self) -> Vec<PhotoFolder> {
+    fn get_folder(&self) -> Vec<FolderList> {
         todo!()
     }
     fn chosen_folder(self, path: &Path) -> PhotoCore<SelectedRootFolder> {
-        todo!()
+        PhotoCore {
+            state: SelectedRootFolder {
+                source: self.state.source,
+                root: path.to_path_buf(),
+            },
+        }
     }
 }
 
 impl PhotoCore<SelectedRootFolder> {
-    fn scan_photo(&self, recurse: bool) -> PhotoFolder {
+    fn scan_photo(&self, recurse: bool) -> Vec<PhotoFolder> {
         todo!()
     }
+}
+
+#[test]
+fn test1(){
+    let core = PhotoCore::new();
+    let sources = core.get_sources();
+    println!("{sources:?}");
+
 }
