@@ -1,5 +1,4 @@
 use exif::DateTime;
-use std::fs::DirEntry;
 use std::path::PathBuf;
 
 #[derive(Debug)]

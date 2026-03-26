@@ -2,7 +2,6 @@ use photo_manager_messages::PhotoFolder;
 
 use crate::{PhotoCore, state};
 
-
 impl PhotoCore<state::SelectedRootFolder> {
     fn scan_photo(&self, recurse: bool) -> Vec<PhotoFolder> {
         // fn get_all_photo(path: &Path, recurse: bool) -> Vec<PathBuf>{

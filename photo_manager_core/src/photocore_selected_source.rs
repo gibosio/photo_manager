@@ -1,4 +1,7 @@
-use std::{fs, path::{Path, PathBuf}};
+use std::{
+    fs,
+    path::{Path, PathBuf},
+};
 
 use photo_manager_messages::FolderList;
 
@@ -52,11 +55,11 @@ impl PhotoCore<state::SelectedSource> {
             .into_iter()
             .flatten()
             .filter_map(Result::ok)
-            .map(|entry|entry.path())
-            .filter(|entry|entry.is_dir())
+            .map(|entry| entry.path())
+            .filter(|entry| entry.is_dir())
             .collect::<Vec<PathBuf>>();
         std::iter::once(self.state.current.to_path_buf())
-            .chain(parent.into_iter().map(|p|p.to_path_buf()))
+            .chain(parent.into_iter().map(|p| p.to_path_buf()))
             .chain(dirs)
             .collect()
     }
